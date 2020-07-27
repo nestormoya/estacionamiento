@@ -54,7 +54,7 @@ pipeline {
     stage('Build') {
       steps {
         echo "------------>Build<------------"
-        sh 'xcodebuild -scheme "estacionamiento" -configuration "Debug" build test -destination "platform:iOS Simulator, OS:latest, name:iPhone 8"'
+        sh 'xcodeBuild -scheme "estacionamiento" -configuration "Debug" build test -destination "platform:iOS Simulator, OS:latest, name:iPhone 8"'
       }
     }  
   }
