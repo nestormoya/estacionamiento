@@ -54,7 +54,8 @@ pipeline {
     stage('Build') {
       steps {
         echo "------------>Build<------------"
-        sh 'xcodebuild -scheme "estacionamiento" -configuration "Debug" build test -destination "platform:iOS Simulator, OS:latest, name:iPhone 8"'
+        // sh 'xcodebuild -scheme "estacionamiento" -configuration "Debug" build test -destination "platform:iOS Simulator, OS:latest, name:iPhone 8"'
+	sh "xcodeBuild allowFailingBuildResults: true, appURL: '', assetPackManifestURL: '', buildDir: '', bundleID: '', bundleIDInfoPlistPath: '', cfBundleShortVersionStringValue: '', cfBundleVersionValue: '', cleanResultBundlePath: false, configuration: 'Release', developmentTeamID: '', developmentTeamName: '', displayImageURL: '', fullSizeImageURL: '', ipaExportMethod: 'ad-hoc', ipaName: '', ipaOutputDirectory: '', keychainId: '', keychainPath: '', keychainPwd: <object of type hudson.util.Secret>, logfileOutputDirectory: '', provisioningProfiles: [[provisioningProfileAppId: '', provisioningProfileUUID: '']], resultBundlePath: '', sdk: '', symRoot: '', target: '', thinning: '', xcodeName: 'Xcode_Mac', xcodeProjectFile: 'estacionamiento.xcodeproj', xcodeProjectPath: '', xcodeSchema: 'estacionamiento', xcodeWorkspaceFile: '', xcodebuildArguments: ''"
       }
     }  
   }
