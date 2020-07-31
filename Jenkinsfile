@@ -54,8 +54,8 @@ pipeline {
     stage('Build') {
       steps {
         echo "------------>Build<------------"
-	sh 'xcodebuild -scheme estacionamiento build'
-        // sh 'xcodebuild -scheme "estacionamiento" -configuration "Debug" build test -destination "platform:iOS Simulator, OS:latest, name:iPhone 8"'
+	// sh 'xcodebuild -scheme estacionamiento build'
+        sh 'xcodebuild -scheme "estacionamiento" -configuration "Debug" build test -destination "platform:iOS Simulator, OS:latest, name:iPhone 8"'
 	// sh "xcodeBuild allowFailingBuildResults: true, cleanResultBundlePath: false, configuration: 'Release', ipaExportMethod: 'ad-hoc', keychainPwd: <object of type hudson.util.Secret>, xcodeName: 'Xcode_Mac', xcodeProjectFile: 'estacionamiento.xcodeproj', xcodeProjectPath: '', xcodeSchema: 'estacionamiento'"
       }
     }  
