@@ -5,43 +5,25 @@ pipeline {
   }
 
   //Opciones específicas de Pipeline dentro del Pipeline
-  // options {
-    // buildDiscarder(logRotator(numToKeepStr: '3'))
-      // disableConcurrentBuilds()
-  // }
-
-  //Una sección que define las herramientas “preinstaladas” en Jenkins
-  // tools {
-    // jdk 'JDK8_Centos' //Preinstalada en la Configuración del Master
-    // gradle 'Gradle4.5_Centos' //Preinstalada en la Configuración del Master
-  // }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '3'))
+    disableConcurrentBuilds()
+  }
 
   //Aquí comienzan los “items” del Pipeline
   stages{
-    stage('Checkout') {
-      steps{
-        echo "------------>Checkout<------------"
-        checkout([
-            $class: 'GitSCM',
-            branches: [[name: 'master']],
-            doGenerateSubmoduleConfigurations: false,
-            extensions: [], 
-            submoduleCfg: [],
-            userRemoteConfigs: [[
-                credentialsId: 'GitHub_nestormoya',
-                url: 'https://github.com/nestormoya/estacionamiento.git'
-            ]]
-        ])
+    stage('Build') {
+      steps {
+        echo "------------>Build<------------"
+	      sh 'xcodebuild clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"'
       }
-    }
-    
-    stage('Compile & Unit Tests') {
+    }  
+    stage('Unit Tests') {
       steps{
         echo "------------>Unit Tests<------------"
 
       }
     }
-
     stage('Static Code Analysis') {
       steps{
         echo '------------>Análisis de código estático<------------'
@@ -51,15 +33,6 @@ pipeline {
       }
     }
 
-    stage('Build') {
-      steps {
-        echo "------------>Build<------------"
-	// sh 'xcodebuild -scheme estacionamiento build'
-	sh 'xcodebuild clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"'
-        // sh 'xcodebuild -scheme "estacionamiento" -configuration "Debug" build test -destination "platform:iOS Simulator, OS:latest, name:iPhone 8"'
-	// sh "xcodeBuild allowFailingBuildResults: true, cleanResultBundlePath: false, configuration: 'Release', ipaExportMethod: 'ad-hoc', keychainPwd: <object of type hudson.util.Secret>, xcodeName: 'Xcode_Mac', xcodeProjectFile: 'estacionamiento.xcodeproj', xcodeProjectPath: '', xcodeSchema: 'estacionamiento'"
-      }
-    }  
   }
 
   post {
@@ -72,7 +45,7 @@ pipeline {
     }
     failure {
       echo 'This will run only if failed'
-      mail (to: 'nestor.moy@ceiba.com.co',subject: "Failed Pipeline:${currentBuild.fullDisplayName}",body: "Something is wrong with ${env.BUILD_URL}")
+      mail (to: 'nestor.moya@ceiba.com.co',subject: "Failed Pipeline:${currentBuild.fullDisplayName}",body: "Something is wrong with ${env.BUILD_URL}")
     }
     unstable {
       echo 'This will run only if the run was marked as unstable'
