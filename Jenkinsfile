@@ -21,14 +21,14 @@ pipeline {
     stage('Unit Tests') {
       steps{
         echo "------------>Unit Tests<------------"
-
+        sh 'xcodebuild test -scheme estacionamientoTests -configuration "Debug" -sdk  -destination "platform=iOS Simulator,name=iPhone 11,OS=14.5" -enableCodeCoverage YES | xcpretty -r junit --output build/reports/junit.xml'
       }
     }
     stage('Static Code Analysis') {
       steps{
         echo '------------>Análisis de código estático<------------'
         withSonarQubeEnv('Sonar') {
-        sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+        //sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
         }
       }
     }
