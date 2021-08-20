@@ -22,7 +22,7 @@ pipeline {
       steps{
         echo "------------>Unit Tests<------------"
         //sh 'xcodebuild test -scheme estacionamientoTests -configuration "Debug" -sdk  -destination "platform=iOS Simulator,name=iPhone 11,OS=14.5" -enableCodeCoverage YES | xcpretty -r junit --output build/reports/junit.xml'
-        sh 'xcodebuild test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"'
+        sh 'xcodebuild test -scheme estacionamientoTests CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"'
       }
     }
     stage('Static Code Analysis') {
