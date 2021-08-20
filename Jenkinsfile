@@ -27,10 +27,10 @@ pipeline {
     stage('Static Code Analysis') {
       steps{
         echo '------------>Análisis de código estático<------------'
+        sh 'swiftlint lint > swiftlint.txt || true'
         withSonarQubeEnv('Sonar') {
             sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
         }
-
       }
     }
   }
